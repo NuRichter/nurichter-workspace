@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — NuRichter Workspace</title>
+  <meta name="description" content="Products, Sub-Companies & Projects — NuRichter Workspace Timeline.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='white' d='M12,2 L5,13 L11,13 L8,22 L19,9 L13,9 Z'/></svg>" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar-nu" x-data="{ mobileOpen: false }">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li class="nav-dropdown" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+          <a href="#" @click.prevent class="active">Portfolio ▾</a>
+          <div class="nav-dropdown-menu" x-show="open" x-transition><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="history.html">Our History</a></div>
+        </li>
+        <li><a href="contact.html">Contact Us</a></li><li><a href="lab.html" class="nav-labs-badge">Labs</a></li>
+      </ul>
+      <button class="hamburger" :class="{ 'active': mobileOpen }" @click="mobileOpen = !mobileOpen"><span></span><span></span><span></span></button>
+    </div>
+    <div class="mobile-nav-overlay" x-show="mobileOpen" x-transition.opacity @click.self="mobileOpen = false">
+      <a href="index.html">Home</a><a href="about.html">About Us</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="history.html">Our History</a><a href="contact.html">Contact Us</a><a href="lab.html">Labs</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper" x-data="{ tab: 'all' }">
+    <svg class="corner-wave-tr" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M350,0 Q280,70 200,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,30 Q290,90 220,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,60 Q300,110 240,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,90 Q310,130 260,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,120 Q320,150 280,350" fill="none" stroke="white" stroke-width="1"/></svg>
+    <svg class="corner-wave-bl" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M0,350 Q70,280 350,200" fill="none" stroke="white" stroke-width="1"/><path d="M0,320 Q60,260 350,180" fill="none" stroke="white" stroke-width="1"/><path d="M0,290 Q50,240 350,160" fill="none" stroke="white" stroke-width="1"/><path d="M0,260 Q40,220 350,140" fill="none" stroke="white" stroke-width="1"/></svg>
+
+    <section class="hero-half text-center bg-grid">
+      <div class="container-nu" style="position:relative;z-index:1;">
+        <svg viewBox="0 0 24 24" fill="none" style="width:48px;height:48px;margin-bottom:1.5rem;" data-aos="fade-down"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg>
+        <h1 class="heading-section" data-aos="fade-up">Products, Sub-Companies & Projects</h1>
+        <p class="heading-sub mx-auto" style="font-style:italic;" data-aos="fade-up" data-aos-delay="100">(Year Ascended Order)</p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section-nu">
+      <div class="container-nu">
+        <div class="filter-tabs" data-aos="fade-up">
+          <button class="filter-tab" :class="{ 'active': tab === 'all' }" @click="tab = 'all'">Semua</button>
+          <button class="filter-tab" :class="{ 'active': tab === 'active' }" @click="tab = 'active'">Active</button>
+          <button class="filter-tab" :class="{ 'active': tab === 'finished' }" @click="tab = 'finished'">Finished</button>
+          <button class="filter-tab" :class="{ 'active': tab === 'abandoned' }" @click="tab = 'abandoned'">Abandoned</button>
+          <button class="filter-tab" :class="{ 'active': tab === 'future' }" @click="tab = 'future'">Future</button>
+        </div>
+
+        <div class="timeline">
+          <!-- ACTIVE PROJECTS -->
+          <div x-show="tab === 'all' || tab === 'active'">
+            <div class="timeline-item"><div class="timeline-date">2026</div><div class="timeline-content"><h3>PKM & PIMNAS 2026 — AGRIHEX-SKYCURE</h3><div class="field-badge">Drone Agriculture · IoT · Computer Vision</div><p>Hexarotor drone untuk deteksi dan penyemprotan penyakit tanaman bawang merah di Nganjuk. Jetson Orin/Nano, Intel RealSense D435i, ArduPilot, Cloud CI-CPS + FastAPI.</p><span class="status-badge status-active">Active</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2026</div><div class="timeline-content"><h3>HACKATHON IOC SKK MIGAS — WELLSENSE</h3><div class="field-badge">AI/ML · Oil & Gas · Predictive Analytics</div><p>Platform monitoring produksi offshore AI/ML. Five-layer: sensor ingestion → ETL/SMOTE → dual-track ML → Human-in-the-Loop → Streamlit dashboard.</p><span class="status-badge status-active">Active</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2026</div><div class="timeline-content"><h3>PROJECT "SPERM QUANT" — CASA</h3><div class="field-badge">Biomedical Engineering · Computer Vision</div><p>Sistem CASA kolaborasi dengan Dr. I Gede Susrama Mas Diyasa, ST., MT. IPU. Image processing dan ML untuk analisis sperma.</p><span class="status-badge status-active">Active</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2026</div><div class="timeline-content"><h3>PROJECT BOOK — "HUMAN CATALYST"</h3><div class="field-badge">Technical Writing · Philosophy of Technology</div><p>Buku tentang peran manusia sebagai katalis perubahan teknologi dan sosial. Seri "Catalyst" books NuRichter.</p><span class="status-badge status-active">Active</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2026</div><div class="timeline-content"><h3>PROJECT BOOK — "ROBOTICS CATALYST PART ONE"</h3><div class="field-badge">Technical Writing · Robotics</div><p>Buku referensi robotika: dasar mekatronik hingga otomasi modern. Target: pelajar SMK/politeknik.</p><span class="status-badge status-active">Active</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2025–sekarang</div><div class="timeline-content"><h3>LAST Z HARDSTYLE MIX — YOUTUBE</h3><div class="field-badge">Hardstyle Music · Content Creation</div><p>Kolaborasi dengan Eurekanion. Hardstyle, Hardcore, Uptempo next-level taste.</p><span class="status-badge status-active">Active</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2025–sekarang</div><div class="timeline-content"><h3>NURICHTER YOUTUBE CHANNEL</h3><div class="field-badge">YouTube Creator · Tech & Gaming</div><p>Gameplay, walkthrough, insights. Ex: Ibnu Khoirul LPG/MLOPG. Fokus konten teknis & kreatif.</p><span class="status-badge status-active">Active</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2025–sekarang</div><div class="timeline-content"><h3>SCARAMOUCHE GENSHIN IMPACT FANPAGE</h3><div class="field-badge">Facebook · Visual Storytelling</div><p>Fanpage Scaramouche (Wanderer). Visual novel storytelling berbasis gambar. Alter: Richter Scara.</p><span class="status-badge status-active">Active</span></div></div>
+          </div>
+
+          <!-- FINISHED -->
+          <div x-show="tab === 'all' || tab === 'finished'">
+            <div class="timeline-item"><div class="timeline-date">2023–2024</div><div class="timeline-content"><h3>RAGNAROK — MITSUBISHI PLC TRAINER</h3><div class="field-badge">Electrical Engineering · Education</div><p>Trainer PLC Mitsubishi untuk pneumatik. Produk pertama lini Ragnarok untuk pendidikan vokasi.</p><span class="status-badge status-finished">Finished</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2023–2024</div><div class="timeline-content"><h3>RAGNAROK — SIEMENS PLC TRAINER</h3><div class="field-badge">Electrical Engineering · Education</div><p>Trainer PLC Siemens S7-1200 pneumatik. Fitur diagnostik + HMI sederhana.</p><span class="status-badge status-finished">Finished</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2023–2024</div><div class="timeline-content"><h3>RAGNAROK — SCHNEIDER PLC TRAINER</h3><div class="field-badge">Electrical Engineering · Education</div><p>Trainer PLC Schneider pneumatik & hidrolik. Dual-actuator system demonstration.</p><span class="status-badge status-finished">Finished</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2024</div><div class="timeline-content"><h3>RAGNAROK — YALONG REBUILD</h3><div class="field-badge">Industrial Automation · Education</div><p>Rekonstruksi unit Yalong. Upgrade wiring, sensor feedback, re-dokumentasi teknis.</p><span class="status-badge status-finished">Finished</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2022</div><div class="timeline-content"><h3>MULYA JAYA — PLAKAT ORDER</h3><div class="field-badge">CNC Manufacturing</div><p>Produksi plakat custom. Proyek awal kapabilitas CNC milling NuRichter skala UMKM Jakarta.</p><span class="status-badge status-finished">Finished</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">2025</div><div class="timeline-content"><h3>SERATUS ILMU — WEBSITE REBUILD</h3><div class="field-badge">Web Development · Training Platform</div><p>Rebuild website PT Karya Nusatama Indonesia. Modernisasi UI/UX dan optimasi mobile.</p><span class="status-badge status-finished">Finished</span></div></div>
+          </div>
+
+          <!-- ABANDONED / TEMPORAL -->
+          <div x-show="tab === 'all' || tab === 'abandoned'">
+            <div class="timeline-item"><div class="timeline-date">Temporal</div><div class="timeline-content"><h3>GENSHIN IMPACT MABAR WITH RAY</h3><div class="field-badge">Gaming Community</div><p>Konten kolaboratif gaming. Ditunda karena fokus proyek teknis prioritas.</p><span class="status-badge status-temporal">Temporal</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">Temporal</div><div class="timeline-content"><h3>EARTH SKY SPACE — EUPHORIC HARDSTYLE</h3><div class="field-badge">Hardstyle Music</div><p>Mix Euphoric Hardstyle tema alam semesta. Ditunda untuk Last Z.</p><span class="status-badge status-temporal">Temporal</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">Abandoned</div><div class="timeline-content"><h3>DDD — DUAL DAMAGE DECEMBER RAWSTYLE</h3><div class="field-badge">Hardstyle Music</div><p>Mixing session Rawstyle Desember. Ditinggalkan, arah kreatif ke Last Z.</p><span class="status-badge status-abandoned">Abandoned</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">Abandoned</div><div class="timeline-content"><h3>NNN — NOISECONTROLLERS NUSTYLE NOVEMBER</h3><div class="field-badge">Hardstyle Music</div><p>Monthly Nustyle Hardstyle mixing. Abandoned menyusul DDD.</p><span class="status-badge status-abandoned">Abandoned</span></div></div>
+          </div>
+
+          <!-- FUTURE -->
+          <div x-show="tab === 'all' || tab === 'future'">
+            <div class="timeline-item"><div class="timeline-date">Soon</div><div class="timeline-content"><h3>PROJECT NRM-1 "ARCHER"</h3><div class="field-badge">IoT · Remote Control · Robotics</div><p>RC Ballistic Missile Mobile Launcher. RC systems, IoT telemetry, mechanical design. Tracked/wheeled launcher.</p><span class="status-badge status-future">Future</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">Soon</div><div class="timeline-content"><h3>PROJECT BOOK — "ROBOTICS CATALYST PART TWO"</h3><div class="field-badge">Technical Writing · Advanced Robotics</div><p>Lanjutan Part One: autonomous navigation, swarm robotics, industri 4.0.</p><span class="status-badge status-future">Future</span></div></div>
+
+            <div class="timeline-item"><div class="timeline-date">Soon</div><div class="timeline-content"><h3>CATALYST SERIES — BRAND ESTABLISHMENT</h3><div class="field-badge">Publishing · Brand</div><p>Identitas resmi seri "Catalyst": Human Catalyst, Robotics Part 1 & 2, dan judul mendatang.</p><span class="status-badge status-future">Future</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-nu">
+      <div class="container-nu">
+        <div class="row g-5">
+          <div class="col-lg-5"><a href="index.html" class="nav-brand mb-3" style="display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" style="width:24px;height:24px;"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a><p class="font-mono text-accent mb-3" style="font-size:var(--text-xs);">Richterize The Infinity ∞</p><p class="footer-tagline">Lets Richterize The Infinity!</p></div>
+          <div class="col-6 col-lg-3"><h6>Navigate</h6><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="lab.html">Labs</a></div>
+          <div class="col-6 col-lg-4"><h6>Connect</h6><a href="https://wa.me/6281280717345" target="_blank">WhatsApp: 081280717345</a></div>
+        </div>
+      </div>
+      <div class="footer-bottom">© <span class="footer-year"></span> NuRichter Workspace · Richterize The Infinity ∞</div>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

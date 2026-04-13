@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NuRichter History — The Journey So Far</title>
+  <meta name="description" content="Perjalanan NuRichter dari 2017 hingga sekarang — setiap langkah punya cerita.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='white' d='M12,2 L5,13 L11,13 L8,22 L19,9 L13,9 Z'/></svg>" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar-nu" x-data="{ mobileOpen: false }">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li class="nav-dropdown" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"><a href="#" @click.prevent class="active">Portfolio ▾</a><div class="nav-dropdown-menu" x-show="open" x-transition><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="history.html">Our History</a></div></li>
+        <li><a href="contact.html">Contact Us</a></li><li><a href="lab.html" class="nav-labs-badge">Labs</a></li>
+      </ul>
+      <button class="hamburger" :class="{ 'active': mobileOpen }" @click="mobileOpen = !mobileOpen"><span></span><span></span><span></span></button>
+    </div>
+    <div class="mobile-nav-overlay" x-show="mobileOpen" x-transition.opacity @click.self="mobileOpen = false"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="history.html">Our History</a><a href="contact.html">Contact Us</a><a href="lab.html">Labs</a></div>
+  </nav>
+
+  <div class="page-wrapper">
+    <svg class="corner-wave-tr" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M350,0 Q280,70 200,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,30 Q290,90 220,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,60 Q300,110 240,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,90 Q310,130 260,350" fill="none" stroke="white" stroke-width="1"/></svg>
+    <svg class="corner-wave-bl" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M0,350 Q70,280 350,200" fill="none" stroke="white" stroke-width="1"/><path d="M0,320 Q60,260 350,180" fill="none" stroke="white" stroke-width="1"/><path d="M0,290 Q50,240 350,160" fill="none" stroke="white" stroke-width="1"/></svg>
+
+    <section class="hero-half text-center bg-grid">
+      <div class="container-nu" style="position:relative;z-index:1;">
+        <h1 class="heading-section" data-aos="fade-up">The NuRichter Journey</h1>
+        <p class="heading-sub mx-auto" data-aos="fade-up" data-aos-delay="100">Dari nol hingga hari ini — setiap langkah punya cerita</p>
+      </div>
+    </section>
+    <div class="section-divider"></div>
+
+    <section class="section-nu">
+      <div class="container-nu">
+        <div class="timeline">
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">Oktober 2017</div>
+            <div class="timeline-content">
+              <h3>YouTube "NuRichter"</h3>
+              <div class="field-badge">YouTube Creator</div>
+              <p>Mulai journey konten kreator dengan nama Ibnu Khoirul LPG, kemudian Ibnu Khoirul MLOPG, akhirnya menetap di NuRichter. Fokus pada gameplay, walkthrough, dan gaming insights. Langkah pertama membangun identitas digital yang kelak menjadi fondasi NuRichter brand.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">2020</div>
+            <div class="timeline-content">
+              <h3>Founding of NuRichter Brand</h3>
+              <div class="field-badge">Brand Identity</div>
+              <p>NuRichter resmi dibentuk sebagai brand personal Ibnu Khoirul Anwar untuk membangun identitas digital, menggabungkan passion teknis dan kreatif. Saat ini visi mulai terbentuk: sebuah workspace yang menyatukan berbagai domain engineering dan kreativitas.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">September 2022</div>
+            <div class="timeline-content">
+              <h3>Mulya Jaya — Pioneer CNC Manufacturing</h3>
+              <div class="field-badge">CNC Manufacturing</div>
+              <p>Proyek pertama manufaktur CNC. Awalnya untuk kompetisi nasional, kemudian redefined sebagai layanan CNC milling dan 3D printing skala UMKM Jakarta. Produksi plakat custom menetapkan kapabilitas fabrication NuRichter di ranah fisik.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">Mei 2023</div>
+            <div class="timeline-content">
+              <h3>RigRoom — IoT Services Platform</h3>
+              <div class="field-badge">IoT Services</div>
+              <p>Kelahiran RigRoom sebagai brand IoT services. Ex kompetisi nasional yang redefined menjadi layanan IoT berbasis Arduino, PLC (Siemens & Mitsubishi), dan Raspberry Pi. "Your Imagination can come true with RigRoom." — tagline yang menegaskan komitmen terhadap inovasi tanpa batas.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">Mei 2023</div>
+            <div class="timeline-content">
+              <h3>Typography Quickies</h3>
+              <div class="field-badge">Typography Edit</div>
+              <p>Implementasi NuRichter mindset dalam dunia tipografi. Desain infografis unik dan berkarakter yang berbeda dari norm — tiap infografis punya signature sendiri. Bukan sekedar desain, tapi statement visual.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">Juli 2023</div>
+            <div class="timeline-content">
+              <h3>RAGNAROK — Electrical Services Brand</h3>
+              <div class="field-badge">Electrical Engineering</div>
+              <p>Brand personal NuRichter untuk layanan desain elektrikal skala industri. Mostly experienced dengan pneumatik dan hidrolik, Three-phase/Five-phase SCADA. Lini produk trainer PLC (Mitsubishi, Siemens, Schneider) untuk pendidikan vokasi. Ragnarok menjadi simbol kekuatan teknis NuRichter.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">September 2025</div>
+            <div class="timeline-content">
+              <h3>Seratus Ilmu Partnership</h3>
+              <div class="field-badge">Training & Workshop</div>
+              <p>Kolaborasi resmi dengan PT Karya Nusatama Indonesia (Seratus Ilmu) sebagai platform training & workshop. NuRichter membantu rebuild website dan kontribusi pada modul pelatihan. Partnership strategis pertama yang memperluas jangkauan NuRichter ke dunia pelatihan profesional.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">September 2025</div>
+            <div class="timeline-content">
+              <h3>Scaramouche Genshin Impact Fanpage</h3>
+              <div class="field-badge">Facebook · Visual Storytelling</div>
+              <p>Facebook fanpage untuk Scaramouche/Wanderer dari Genshin Impact. Bukan sekedar fanpage biasa — platform visual novel storytelling berbasis gambar. Alter ego: Richter Scara. Menunjukkan sisi kreatif dan storytelling NuRichter di luar domain teknis.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">September 2025</div>
+            <div class="timeline-content">
+              <h3>"Last Z" Hardstyle YouTube Channel</h3>
+              <div class="field-badge">Hardstyle Music</div>
+              <p>Kolaborasi dengan Eurekanion. Unified vision untuk next-level taste Hardstyle: Hardcore, Uptempo, dan subgenre lainnya. Musik sebagai manifestasi kreativitas NuRichter di domain audio — karena kreativitas tidak mengenal batasan medium.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">2025</div>
+            <div class="timeline-content">
+              <h3>NuRichter Workspace — Official Establishment</h3>
+              <div class="field-badge">Workspace · Brand</div>
+              <p>NuRichter Workspace dikukuhkan sebagai entitas formal untuk memfokuskan produktivitas dan kreatifitas. Mengintegrasikan semua sub-brand dan proyek di bawah satu atap workspace. Visi "Richterize The Infinity" resmi menjadi kompas arah: inovasi tanpa batas, kreativitas tanpa akhir.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">2026</div>
+            <div class="timeline-content">
+              <h3>Active R&D — The Current Chapter</h3>
+              <div class="field-badge">Research & Development</div>
+              <p>AgriHex-SkyCure (PKM Drone), Wellsense (IOC Hackathon AI/ML), Sperm Quant CASA, Book Projects (Human Catalyst, Robotics Catalyst), dan NRM-1 Archer dalam pipeline. NuRichter terus bergerak maju — setiap proyek membuka domain baru, setiap tantangan memperkuat kapabilitas.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-aos="fade-up">
+            <div class="timeline-date">Future</div>
+            <div class="timeline-content" style="border-color: var(--color-accent);">
+              <h3 class="text-gradient">The Next Chapter...</h3>
+              <div class="field-badge">To Be Written</div>
+              <p>Seri buku Catalyst, NRM-1 Archer, dan proyek-proyek baru yang belum terungkap. NuRichter Workspace terus bertumbuh — karena infinity tidak mengenal titik akhir. Stay tuned. ∞</p>
+              <span class="status-badge status-future">Future</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-nu">
+      <div class="container-nu"><div class="row g-5">
+        <div class="col-lg-5"><a href="index.html" class="nav-brand mb-3" style="display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" style="width:24px;height:24px;"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a><p class="font-mono text-accent mb-3" style="font-size:var(--text-xs);">Richterize The Infinity ∞</p></div>
+        <div class="col-6 col-lg-3"><h6>Navigate</h6><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="lab.html">Labs</a></div>
+        <div class="col-6 col-lg-4"><h6>Connect</h6><a href="https://wa.me/6281280717345" target="_blank">WhatsApp: 081280717345</a></div>
+      </div></div>
+      <div class="footer-bottom">© <span class="footer-year"></span> NuRichter Workspace · Richterize The Infinity ∞</div>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

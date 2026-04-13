@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Domain Services — NuRichter Workspace</title>
+  <meta name="description" content="6 Bidang Layanan NuRichter Workspace — IoT, Electrical, Mechatronics, CNC, AI/ML, Creative.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='white' d='M12,2 L5,13 L11,13 L8,22 L19,9 L13,9 Z'/></svg>" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar-nu" x-data="{ mobileOpen: false }">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li class="nav-dropdown" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+          <a href="#" @click.prevent class="active">Portfolio ▾</a>
+          <div class="nav-dropdown-menu" x-show="open" x-transition><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="history.html">Our History</a></div>
+        </li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="lab.html" class="nav-labs-badge">Labs</a></li>
+      </ul>
+      <button class="hamburger" :class="{ 'active': mobileOpen }" @click="mobileOpen = !mobileOpen"><span></span><span></span><span></span></button>
+    </div>
+    <div class="mobile-nav-overlay" x-show="mobileOpen" x-transition.opacity @click.self="mobileOpen = false">
+      <a href="index.html">Home</a><a href="about.html">About Us</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="history.html">Our History</a><a href="contact.html">Contact Us</a><a href="lab.html">Labs</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <svg class="corner-wave-tr" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M350,0 Q280,70 200,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,30 Q290,90 220,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,60 Q300,110 240,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,90 Q310,130 260,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,120 Q320,150 280,350" fill="none" stroke="white" stroke-width="1"/></svg>
+    <svg class="corner-wave-bl" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M0,350 Q70,280 350,200" fill="none" stroke="white" stroke-width="1"/><path d="M0,320 Q60,260 350,180" fill="none" stroke="white" stroke-width="1"/><path d="M0,290 Q50,240 350,160" fill="none" stroke="white" stroke-width="1"/><path d="M0,260 Q40,220 350,140" fill="none" stroke="white" stroke-width="1"/></svg>
+
+    <section class="hero-half text-center bg-grid">
+      <div class="container-nu" style="position:relative;z-index:1;">
+        <h1 class="heading-section" data-aos="fade-up">Our Domain Services</h1>
+        <p class="heading-sub mx-auto" data-aos="fade-up" data-aos-delay="100">Dari sensor ke sistem, dari ide ke produk</p>
+        <p class="font-mono text-muted-nu mt-3" style="font-size:var(--text-xs);" data-aos="fade-up" data-aos-delay="200">6 Bidang Layanan · IoT · Electrical · Mechatronics · CNC · AI/ML · Creative</p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SERVICE BLOCKS -->
+    <section class="section-nu">
+      <div class="container-nu">
+
+        <!-- 01 IoT -->
+        <div class="service-block" data-aos="fade-up">
+          <div class="service-block-content">
+            <div class="service-block-num">01</div>
+            <h3 style="padding-top:3rem;">IoT and IoE</h3>
+            <div class="field-badge mb-3">Internet of Things & Everything</div>
+            <p>Pengembangan sistem IoT dari sensor-level hingga cloud integration. Meliputi hardware prototyping (Arduino, Raspberry Pi, ESP32), komunikasi MQTT/HTTP, serta dashboard monitoring realtime.</p>
+            <div class="feature-tags">
+              <span class="feature-tag">Hardware Prototyping</span>
+              <span class="feature-tag">MQTT Integration</span>
+              <span class="feature-tag">Cloud Dashboard</span>
+              <span class="feature-tag">Edge Computing</span>
+            </div>
+          </div>
+          <div class="service-block-visual">
+            <div class="service-icon-lg">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 Electrical -->
+        <div class="service-block reverse" data-aos="fade-up">
+          <div class="service-block-content">
+            <div class="service-block-num">02</div>
+            <h3 style="padding-top:3rem;">Electrical Engineering</h3>
+            <div class="field-badge mb-3">Industrial & Commercial Systems</div>
+            <p>Desain dan implementasi sistem kelistrikan industrial dan komersial. Pengalaman dengan PLC Siemens, Mitsubishi, Schneider; sistem pneumatik, hidrolik, dan kontrol SCADA three-phase/five-phase.</p>
+            <div class="feature-tags">
+              <span class="feature-tag">PLC Programming</span>
+              <span class="feature-tag">Panel Design</span>
+              <span class="feature-tag">SCADA Systems</span>
+              <span class="feature-tag">Pneumatics & Hydraulics</span>
+            </div>
+          </div>
+          <div class="service-block-visual">
+            <div class="service-icon-lg">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 Mechatronics -->
+        <div class="service-block" data-aos="fade-up">
+          <div class="service-block-content">
+            <div class="service-block-num">03</div>
+            <h3 style="padding-top:3rem;">Mechatronics Engineering</h3>
+            <div class="field-badge mb-3">Mechanic + Electronic + Software Integration</div>
+            <p>Integrasi mekanik, elektronik, dan software dalam satu sistem. Pengembangan robotika, automation industrial miniature, dan sistem cyber-physical (CPS) untuk aplikasi modern.</p>
+            <div class="feature-tags">
+              <span class="feature-tag">Robotics</span>
+              <span class="feature-tag">Industrial Automation</span>
+              <span class="feature-tag">CPS Architecture</span>
+              <span class="feature-tag">Embedded Systems</span>
+            </div>
+          </div>
+          <div class="service-block-visual">
+            <div class="service-icon-lg">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 CNC -->
+        <div class="service-block reverse" data-aos="fade-up">
+          <div class="service-block-content">
+            <div class="service-block-num">04</div>
+            <h3 style="padding-top:3rem;">CNC & 3D Printing Production</h3>
+            <div class="field-badge mb-3">Physical Manufacturing</div>
+            <p>Produksi fisik melalui kolaborasi dengan Workshop Mekatronika SMK Negeri 4 Jakarta sebagai Lab Creative utama. CNC milling, 3D printing, dan fabrikasi prototipe skala UMKM.</p>
+            <div class="feature-tags">
+              <span class="feature-tag">CNC Milling</span>
+              <span class="feature-tag">FDM 3D Printing</span>
+              <span class="feature-tag">Rapid Prototyping</span>
+              <span class="feature-tag">UMKM Scale</span>
+            </div>
+            <div class="collab-badge">In Collab with SMK Negeri 4 Jakarta</div>
+          </div>
+          <div class="service-block-visual">
+            <div class="service-icon-lg">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M17 12h.01"/><path d="M7 12h.01"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 LSTM -->
+        <div class="service-block" data-aos="fade-up">
+          <div class="service-block-content">
+            <div class="service-block-num">05</div>
+            <h3 style="padding-top:3rem;">LSTM & Transformers Engineering</h3>
+            <div class="field-badge mb-3">AI/ML Solutions</div>
+            <p>Pengembangan solusi AI/ML berbasis LSTM untuk prediksi time-series dan Transformer architecture untuk aplikasi NLP dan computer vision. Pengalaman dari project Wellsense (oil & gas) dan AgriHex (agricultural drone).</p>
+            <div class="feature-tags">
+              <span class="feature-tag">LSTM Time-Series</span>
+              <span class="feature-tag">Transformer Models</span>
+              <span class="feature-tag">SMOTE Augmentation</span>
+              <span class="feature-tag">Human-in-the-Loop AI</span>
+              <span class="feature-tag">Streamlit Dashboard</span>
+            </div>
+          </div>
+          <div class="service-block-visual">
+            <div class="service-icon-lg">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 06 Creative -->
+        <div class="service-block reverse" data-aos="fade-up">
+          <div class="service-block-content">
+            <div class="service-block-num">06</div>
+            <h3 style="padding-top:3rem;">Content Creative</h3>
+            <div class="field-badge mb-3">Digital Production & Brand Identity</div>
+            <p>Produksi konten digital: tipografi, infografis, video editing, YouTube content (NuRichter YT, Last Z Hardstyle), dan desain visual yang kuat secara brand. Typography Quickies mindset — unik dan berkarakter.</p>
+            <div class="feature-tags">
+              <span class="feature-tag">Typography Design</span>
+              <span class="feature-tag">Infographics</span>
+              <span class="feature-tag">Video Editing</span>
+              <span class="feature-tag">Brand Identity</span>
+            </div>
+          </div>
+          <div class="service-block-visual">
+            <div class="service-icon-lg">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PROCESS -->
+    <section class="section-nu bg-secondary-nu">
+      <div class="container-nu">
+        <h2 class="heading-section text-center mb-5" data-aos="fade-up">Proses Kerja</h2>
+        <div class="process-steps" data-aos="fade-up">
+          <div class="process-step">
+            <div class="process-step-num">01</div>
+            <h4>Konsultasi</h4>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">02</div>
+            <h4>Perancangan</h4>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">03</div>
+            <h4>Implementasi</h4>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">04</div>
+            <h4>Serah Terima</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer-nu">
+      <div class="container-nu">
+        <div class="row g-5">
+          <div class="col-lg-5">
+            <a href="index.html" class="nav-brand mb-3" style="display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a>
+            <p class="font-mono text-accent mb-3" style="font-size:var(--text-xs);">Richterize The Infinity ∞</p>
+            <p class="footer-tagline">"NuRichter" dibangun sejak 2020 oleh Ibnu Khoirul Anwar. Lets Richterize The Infinity!</p>
+          </div>
+          <div class="col-6 col-lg-3"><h6>Navigate</h6><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="lab.html">Labs</a></div>
+          <div class="col-6 col-lg-4"><h6>Connect</h6><a href="https://wa.me/6281280717345" target="_blank">WhatsApp: 081280717345</a><p class="font-mono text-muted-nu mt-3" style="font-size:var(--text-xs);">IoT · Electrical · Design · Training</p></div>
+        </div>
+      </div>
+      <div class="footer-bottom">© <span class="footer-year"></span> NuRichter Workspace · Richterize The Infinity ∞</div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

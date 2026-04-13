@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NuRichter Workspace — Richterize The Infinity!</title>
+  <meta name="description" content="NuRichter Workspace — IoT, Electrical Engineering, Creative Design & Training. Richterize The Infinity.">
+  <meta name="author" content="Ibnu Khoirul Anwar">
+  <meta property="og:site_name" content="NuRichter Workspace">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='white' d='M12,2 L5,13 L11,13 L8,22 L19,9 L13,9 Z'/></svg>" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar-nu" x-data="{ mobileOpen: false }" @scroll.window="$el.classList.toggle('scrolled', window.scrollY > 50)">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg>
+        <span>NuRichter Workspace</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li class="nav-dropdown" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+          <a href="#" @click.prevent>Portfolio ▾</a>
+          <div class="nav-dropdown-menu" x-show="open" x-transition @click.outside="open = false">
+            <a href="projects.html">Projects</a>
+            <a href="services.html">Services</a>
+            <a href="history.html">Our History</a>
+          </div>
+        </li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="lab.html" class="nav-labs-badge">Labs</a></li>
+      </ul>
+      <button class="hamburger" :class="{ 'active': mobileOpen }" @click="mobileOpen = !mobileOpen">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav-overlay" x-show="mobileOpen" x-transition.opacity @click.self="mobileOpen = false">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="projects.html">Projects</a>
+      <a href="services.html">Services</a>
+      <a href="history.html">Our History</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="lab.html">Labs</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <!-- Corner waves -->
+    <svg class="corner-wave-tr" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg">
+      <path d="M350,0 Q280,70 200,350" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M350,30 Q290,90 220,350" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M350,60 Q300,110 240,350" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M350,90 Q310,130 260,350" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M350,120 Q320,150 280,350" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M350,150 Q330,170 300,350" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M350,180 Q340,190 320,350" fill="none" stroke="white" stroke-width="1"/>
+    </svg>
+    <svg class="corner-wave-bl" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,350 Q70,280 350,200" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M0,320 Q60,260 350,180" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M0,290 Q50,240 350,160" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M0,260 Q40,220 350,140" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M0,230 Q30,200 350,120" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M0,200 Q20,180 350,100" fill="none" stroke="white" stroke-width="1"/>
+    </svg>
+
+    <!-- HERO -->
+    <section class="hero-full bg-grid">
+      <div class="infinity-watermark">∞</div>
+      <div class="container-nu" style="position:relative; z-index:1;">
+        <div class="hero-badge" data-aos="fade-down">EST. 2020 · JAKARTA</div>
+        <h1 class="text-hero" data-aos="fade-up">
+          <span class="text-gradient">Richterize</span><br>
+          The Infinity
+        </h1>
+        <p class="heading-sub mx-auto mt-3" data-aos="fade-up" data-aos-delay="100">
+          NuRichter Workspace — IoT · Electrical Engineering · Creative Design · Training
+        </p>
+        <div class="hero-cta" data-aos="fade-up" data-aos-delay="200">
+          <a href="projects.html" class="btn btn-primary">Explore Projects</a>
+          <a href="about.html" class="btn btn-outline-light">Learn More</a>
+        </div>
+      </div>
+      <div class="scroll-indicator"><span></span></div>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="section-nu" style="padding-top:0;">
+      <div class="container-nu">
+        <div class="stats-bar" data-aos="fade-up">
+          <div class="stat-item">
+            <div class="stat-value" data-count="2020">0</div>
+            <div class="stat-label">Tahun Berdiri</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" data-count="4" data-suffix="+">0</div>
+            <div class="stat-label">Domain Bidang</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" data-count="10" data-suffix="+">0</div>
+            <div class="stat-label">Proyek Selesai</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" data-count="7" data-suffix="+">0</div>
+            <div class="stat-label">Partner Institusi</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ABOUT SNIPPET -->
+    <section class="section-nu">
+      <div class="container-nu">
+        <div class="two-col">
+          <div data-aos="fade-right">
+            <div class="hero-badge">ABOUT US</div>
+            <h2 class="heading-section">Establishment</h2>
+            <p class="text-secondary-nu" style="line-height:1.9;">
+              NuRichter emerges as a superior brand in public services management,
+              spearheading holistic innovation through NuRichter Workspace. By fusing
+              advanced IoT, electrical engineering, and creative design, it delivers
+              sustainable solutions that empower communities and propel infinite progress.
+            </p>
+            <a href="about.html" class="btn btn-outline-light mt-3">Read Full Story →</a>
+          </div>
+          <div data-aos="fade-left">
+            <div class="card p-4" style="border-image: linear-gradient(135deg, #3b82f6, #7c3aed) 1;">
+              <div class="text-center mb-3">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:64px;height:64px;"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#3b82f6"/></svg>
+              </div>
+              <p class="text-secondary-nu text-center" style="font-style:italic; font-size:var(--text-sm);">
+                "NuRichter Workspace bergerak menuju keunggulan terpadu, melebur berbagai
+                bidang menjadi ekosistem inovasi dan keberlanjutan."
+              </p>
+              <p class="text-center font-mono text-muted-nu mt-2" style="font-size:var(--text-xs);">
+                Richterize The Infinity ∞ · MMXXV
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SERVICES HIGHLIGHT -->
+    <section class="section-nu bg-secondary-nu">
+      <div class="container-nu">
+        <div class="text-center mb-5">
+          <h2 class="heading-section" data-aos="fade-up">Our Domain Services</h2>
+          <p class="heading-sub mx-auto" data-aos="fade-up" data-aos-delay="100">Dari sensor ke sistem, dari ide ke produk</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-card h-100">
+              <div class="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+              </div>
+              <h3>IoT & IoE</h3>
+              <p>Pengembangan sistem IoT dari sensor-level hingga cloud integration. Arduino, ESP32, MQTT, dashboard monitoring realtime.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-card h-100">
+              <div class="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <h3>Electrical Engineering</h3>
+              <p>Desain sistem kelistrikan industrial. PLC Siemens, Mitsubishi, Schneider; pneumatik, hidrolik, SCADA.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-card h-100">
+              <div class="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </div>
+              <h3>Mechatronics Eng.</h3>
+              <p>Integrasi mekanik, elektronik, dan software. Robotika, automation industrial, dan cyber-physical systems.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-card h-100">
+              <div class="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M17 12h.01"/><path d="M7 12h.01"/></svg>
+              </div>
+              <h3>CNC & 3D Printing</h3>
+              <p>Produksi fisik: CNC milling, 3D printing FDM, rapid prototyping skala UMKM.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-card h-100">
+              <div class="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <h3>LSTM & Transformers</h3>
+              <p>AI/ML: LSTM time-series, Transformer NLP/CV. SMOTE augmentation, Human-in-the-Loop AI.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-card h-100">
+              <div class="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+              </div>
+              <h3>Content Creative</h3>
+              <p>Tipografi, infografis, video editing, brand identity. Typography Quickies mindset — unik dan berkarakter.</p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+          <a href="services.html" class="btn btn-outline-light">See All Services →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- FEATURED PROJECTS -->
+    <section class="section-nu">
+      <div class="container-nu">
+        <div class="text-center mb-5">
+          <h2 class="heading-section" data-aos="fade-up">Active Projects</h2>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="project-card h-100">
+              <span class="status-badge status-active mb-3">Active</span>
+              <h4>PKM 2026 — AgriHex-SkyCure</h4>
+              <div class="field-badge mb-2">Drone Agriculture · IoT · Computer Vision</div>
+              <p>Hexarotor drone untuk deteksi dan penyemprotan penyakit tanaman bawang merah di Nganjuk. Jetson Orin, Intel RealSense, ArduPilot.</p>
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="project-card h-100">
+              <span class="status-badge status-active mb-3">Active</span>
+              <h4>Wellsense — IOC Hackathon</h4>
+              <div class="field-badge mb-2">AI/ML · Oil & Gas · Predictive Analytics</div>
+              <p>Platform monitoring produksi offshore berbasis AI/ML dengan prediksi LPO. Five-layer architecture, Streamlit dashboard.</p>
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="project-card h-100">
+              <span class="status-badge status-active mb-3">Active</span>
+              <h4>Sperm Quant — CASA</h4>
+              <div class="field-badge mb-2">Biomedical Engineering · Computer Vision</div>
+              <p>Computer-Assisted Sperm Analysis (CASA) kolaborasi riset. Analisis kuantitatif sperma menggunakan image processing dan ML.</p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+          <a href="projects.html" class="btn btn-outline-light">View All Projects →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PARTNERSHIPS -->
+    <section class="section-nu bg-secondary-nu">
+      <div class="container-nu">
+        <div class="text-center mb-5">
+          <h2 class="heading-section" data-aos="fade-up">Partnerships</h2>
+        </div>
+        <div data-aos="fade-up">
+          <h6 class="font-mono text-muted-nu mb-3" style="font-size:var(--text-xs);letter-spacing:0.1em;text-transform:uppercase;">Perusahaan</h6>
+          <div class="d-flex flex-wrap gap-2 mb-4">
+            <span class="partner-pill">PT Karya Nusatama Indonesia (Seratus Ilmu)</span>
+          </div>
+          <h6 class="font-mono text-muted-nu mb-3" style="font-size:var(--text-xs);letter-spacing:0.1em;text-transform:uppercase;">Sekolah & Institusi</h6>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="partner-pill">SMK Negeri 4 Jakarta</span>
+            <span class="partner-pill">SMK Negeri 49 Jakarta</span>
+            <span class="partner-pill">SMK PGRI 11 Jakarta</span>
+            <span class="partner-pill">SMP Negeri 200 Rorotan</span>
+            <span class="partner-pill">Kelurahan Rorotan</span>
+            <span class="partner-pill">Walikota Jakarta Utara</span>
+            <span class="partner-pill">Walikota Jakarta Timur</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="container-nu" style="position:relative;z-index:1;">
+        <h2 class="heading-section" data-aos="fade-up">Siap Berkolaborasi?</h2>
+        <p class="heading-sub mx-auto" data-aos="fade-up" data-aos-delay="100">Mari wujudkan ide menjadi realita bersama NuRichter Workspace</p>
+        <div class="mt-4" data-aos="fade-up" data-aos-delay="200">
+          <a href="contact.html" class="btn btn-primary">Hubungi Kami</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer-nu">
+      <div class="container-nu">
+        <div class="row g-5">
+          <div class="col-lg-5">
+            <a href="index.html" class="nav-brand mb-3" style="display:inline-flex;">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg>
+              <span>NuRichter Workspace</span>
+            </a>
+            <p class="font-mono text-accent mb-3" style="font-size:var(--text-xs);">Richterize The Infinity ∞</p>
+            <p class="footer-tagline">
+              "NuRichter" dibangun sejak 2020 oleh Ibnu Khoirul Anwar dengan tujuan
+              membangun branding di internet, memperluas domain bidang hingga
+              IoT · Electrical Engineering · Creative Design · Training.
+              NuRichter Workspace dikukuhkan pada 2025 untuk memfokuskan produktivitas
+              dan kreatifitas tiada henti. Lets Richterize The Infinity!
+            </p>
+          </div>
+          <div class="col-6 col-lg-3">
+            <h6>Navigate</h6>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="projects.html">Projects</a>
+            <a href="services.html">Services</a>
+            <a href="lab.html">Labs</a>
+          </div>
+          <div class="col-6 col-lg-4">
+            <h6>Connect</h6>
+            <a href="https://wa.me/6281280717345" target="_blank">WhatsApp: 081280717345</a>
+            <p class="font-mono text-muted-nu mt-3" style="font-size:var(--text-xs);">IoT · Electrical · Design · Training</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © <span class="footer-year"></span> NuRichter Workspace · Richterize The Infinity ∞
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
