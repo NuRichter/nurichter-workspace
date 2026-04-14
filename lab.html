@@ -1,34 +1,14 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NuRichter Labs — Creative Production Lab</title>
-  <meta name="description" content="NuRichter Labs — CNC, 3D Printing, Electronics Workshop, Digital Design Studio.">
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>NuRichter Labs — Creative Production Lab</title><meta name="description" content="NuRichter Labs — CNC, 3D Printing, Electronics, Digital Design Studio.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='white' d='M12,2 L5,13 L11,13 L8,22 L19,9 L13,9 Z'/></svg>" type="image/svg+xml">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
   <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <nav class="navbar-nu" x-data="{ mobileOpen: false }">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-brand"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
-        <li class="nav-dropdown" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"><a href="#" @click.prevent>Portfolio ▾</a><div class="nav-dropdown-menu" x-show="open" x-transition><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="history.html">Our History</a></div></li>
-        <li><a href="contact.html">Contact Us</a></li><li><a href="lab.html" class="nav-labs-badge active">Labs</a></li>
-      </ul>
-      <button class="hamburger" :class="{ 'active': mobileOpen }" @click="mobileOpen = !mobileOpen"><span></span><span></span><span></span></button>
-    </div>
-    <div class="mobile-nav-overlay" x-show="mobileOpen" x-transition.opacity @click.self="mobileOpen = false"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="history.html">Our History</a><a href="contact.html">Contact Us</a><a href="lab.html">Labs</a></div>
-  </nav>
-
-  <div class="page-wrapper">
-    <svg class="corner-wave-tr" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M350,0 Q280,70 200,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,30 Q290,90 220,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,60 Q300,110 240,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,90 Q310,130 260,350" fill="none" stroke="white" stroke-width="1"/></svg>
-    <svg class="corner-wave-bl" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M0,350 Q70,280 350,200" fill="none" stroke="white" stroke-width="1"/><path d="M0,320 Q60,260 350,180" fill="none" stroke="white" stroke-width="1"/><path d="M0,290 Q50,240 350,160" fill="none" stroke="white" stroke-width="1"/></svg>
+</head><body>
+<nav class="navbar-nu" x-data="{ mobileOpen: false, portfolioOpen: false }"><div class="nav-inner"><a href="index.html" class="nav-brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a><ul class="nav-links"><li><a href="index.html" >Home</a></li><li><a href="about.html" >About Us</a></li><li class="nav-dropdown" x-data="{open:false}" @mouseenter="open=true" @mouseleave="open=false"><a href="#" @click.prevent >Portfolio ▾</a><div class="nav-dropdown-menu" x-show="open" x-transition><a href="products.html">Products</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="history.html">Our History</a></div></li><li><a href="contact.html" >Contact Us</a></li><li><a href="lab.html" class="nav-labs-badge active">Labs</a></li></ul><button class="hamburger" :class="{'active':mobileOpen}" @click="mobileOpen=!mobileOpen" aria-label="Toggle navigation"><span></span><span></span><span></span></button></div><div class="mobile-nav-overlay" x-show="mobileOpen" x-transition.opacity @click.self="mobileOpen=false" @keydown.escape.window="mobileOpen=false"><a href="index.html" @click="mobileOpen=false">Home</a><a href="about.html" @click="mobileOpen=false">About Us</a><button style="background:none;border:none;color:var(--color-text-primary);font-size:var(--text-2xl);font-weight:500;cursor:pointer;" @click="portfolioOpen=!portfolioOpen">Portfolio <span class="chevron-rotate" :class="{'open':portfolioOpen}">▾</span></button><div class="mobile-portfolio-sub" x-show="portfolioOpen" x-collapse><a href="products.html" @click="mobileOpen=false">Products</a><a href="projects.html" @click="mobileOpen=false">Projects</a><a href="services.html" @click="mobileOpen=false">Services</a><a href="history.html" @click="mobileOpen=false">Our History</a></div><a href="contact.html" @click="mobileOpen=false">Contact Us</a><a href="lab.html" @click="mobileOpen=false">Labs</a><div class="mobile-sosmed"><a href="https://id.linkedin.com/in/ibnu-khoirul-anwar-15503538b" target="_blank"><i class="bi bi-linkedin"></i></a><a href="https://www.instagram.com/ibnu_lpg/" target="_blank"><i class="bi bi-instagram"></i></a><a href="https://www.youtube.com/@NuRichter" target="_blank"><i class="bi bi-youtube"></i></a><a href="https://github.com/NuRichter" target="_blank"><i class="bi bi-github"></i></a></div></div></nav>
+<div class="page-wrapper"><svg class="corner-wave-tr" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M350,0 Q280,70 200,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,30 Q290,90 220,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,60 Q300,110 240,350" fill="none" stroke="white" stroke-width="1"/><path d="M350,90 Q310,130 260,350" fill="none" stroke="white" stroke-width="1"/></svg><svg class="corner-wave-bl" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg"><path d="M0,350 Q70,280 350,200" fill="none" stroke="white" stroke-width="1"/><path d="M0,320 Q60,260 350,180" fill="none" stroke="white" stroke-width="1"/><path d="M0,290 Q50,240 350,160" fill="none" stroke="white" stroke-width="1"/></svg>
 
     <section class="hero-half text-center bg-grid">
       <div class="container-nu" style="position:relative;z-index:1;">
@@ -39,91 +19,79 @@
     </section>
     <div class="section-divider"></div>
 
-    <!-- Partnership Banner -->
     <section class="section-nu">
       <div class="container-nu">
         <div class="partnership-banner" data-aos="fade-up">
           <p class="font-mono text-accent mb-2" style="font-size:var(--text-xs);letter-spacing:0.1em;text-transform:uppercase;">Official Lab Partner</p>
           <h3 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:0.5rem;">Workshop Mekatronika — SMK Negeri 4 Jakarta</h3>
-          <p class="text-secondary-nu">Saat ini berpartner dengan Workshop Mekatronika SMK Negeri 4 Jakarta sebagai Lab Creative Utama kami</p>
+          <p class="text-secondary-nu mb-3">Saat ini berpartner dengan Workshop Mekatronika SMK Negeri 4 Jakarta sebagai Lab Creative Utama kami. Kami menjadi partner utama dalam fasilitator Lembaga Sertifikasi Profesi (LSP) SMK Negeri 4 Jakarta. Creative and Richterize The Infinity!</p>
+          <div class="d-flex flex-wrap gap-2 justify-content-center">
+            <span class="feature-tag">Official Lab Partner</span>
+            <span class="feature-tag">LSP Facilitator</span>
+            <span class="feature-tag">SMK Negeri 4 Jakarta</span>
+          </div>
         </div>
       </div>
     </section>
     <div class="section-divider"></div>
 
-    <!-- Capabilities -->
     <section class="section-nu bg-secondary-nu">
       <div class="container-nu">
         <h2 class="heading-section text-center mb-5" data-aos="fade-up">Lab Capabilities</h2>
         <div class="row g-4">
-          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="capability-card h-100">
-              <div class="service-icon mb-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/></svg></div>
-              <h3>CNC Milling Lab</h3>
-              <p>CNC milling machines untuk produksi presisi tinggi. Aluminium, acrylic, kayu, dan material komposit. Toleransi hingga ±0.05mm untuk prototipe dan produksi skala kecil.</p>
-            </div>
-          </div>
-          <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="capability-card h-100">
-              <div class="service-icon mb-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="22" height="12" rx="2"/><path d="M6 12h.01M12 12h.01M18 12h.01"/></svg></div>
-              <h3>3D Printing Bay</h3>
-              <p>FDM 3D printing dengan berbagai material: PLA, ABS, PETG, TPU. Build volume hingga 300x300x400mm. Rapid prototyping dalam hitungan jam.</p>
-            </div>
-          </div>
-          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="capability-card h-100">
-              <div class="service-icon mb-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-              <h3>Electronics Workshop</h3>
-              <p>Soldering station, oscilloscope, multimeter, PCB prototyping, dan testing equipment lengkap. Untuk pengembangan embedded systems dan IoT hardware.</p>
-            </div>
-          </div>
-          <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="capability-card h-100">
-              <div class="service-icon mb-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
-              <h3>Digital Design Studio</h3>
-              <p>Workstation untuk CAD/CAM, graphic design, video editing, dan AI/ML development. Adobe Creative Suite, Fusion 360, SolidWorks, dan Python ML stack.</p>
-            </div>
-          </div>
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100"><div class="capability-card h-100"><div class="service-icon mb-3"><i class="bi bi-box" style="font-size:1.25rem;"></i></div><h3>CNC Milling Lab</h3><p>CNC milling presisi tinggi. Aluminium, acrylic, kayu, material komposit. Toleransi ±0.05mm.</p></div></div>
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="200"><div class="capability-card h-100"><div class="service-icon mb-3"><i class="bi bi-printer" style="font-size:1.25rem;"></i></div><h3>3D Printing Bay</h3><p>FDM printing: PLA, ABS, PETG, TPU. Build volume hingga 300x300x400mm. Rapid prototyping.</p></div></div>
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100"><div class="capability-card h-100"><div class="service-icon mb-3"><i class="bi bi-lightning-charge" style="font-size:1.25rem;"></i></div><h3>Electronics Workshop</h3><p>Soldering station, oscilloscope, multimeter, PCB prototyping. Embedded systems dan IoT hardware.</p></div></div>
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="200"><div class="capability-card h-100"><div class="service-icon mb-3"><i class="bi bi-palette" style="font-size:1.25rem;"></i></div><h3>Digital Design Studio</h3><p>CAD/CAM, graphic design, video editing, AI/ML development. Fusion 360, SolidWorks, Python ML stack.</p></div></div>
         </div>
       </div>
     </section>
     <div class="section-divider"></div>
 
-    <!-- Current Lab Projects -->
+    <!-- OUR MACHINES -->
     <section class="section-nu">
       <div class="container-nu">
-        <h2 class="heading-section text-center mb-5" data-aos="fade-up">Current Projects in Lab</h2>
+        <h2 class="heading-section text-center mb-2" data-aos="fade-up">Our Machines</h2>
+        <p class="heading-sub mx-auto text-center mb-5" data-aos="fade-up">Mesin dan tools penggerak roda NuRichter Labs — yang mungkin menjelma jadi Skala Industrial Menengah</p>
         <div class="row g-4">
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="project-card h-100">
-              <span class="status-badge status-active mb-3">Active</span>
-              <h4>AgriHex Drone Hardware</h4>
-              <div class="field-badge mb-2">Hexarotor · Jetson · ArduPilot</div>
-              <p>Fabrikasi frame, integrasi sensor suite, dan assembly propulsion system untuk hexarotor agricultural drone.</p>
-            </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="machine-card"><div class="machine-qty">2</div><h4>CNC 5 Axis Twinhorn VTH-1055F</h4><p class="machine-spec">5-axis simultaneous machining. Supported with Castrol Magna BD 68 Lube</p><span class="machine-badge">CNC · 5 Axis</span></div>
           </div>
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="project-card h-100">
-              <span class="status-badge status-finished mb-3">Finished</span>
-              <h4>Ragnarok Trainer Series</h4>
-              <div class="field-badge mb-2">PLC · Pneumatik · Hidrolik</div>
-              <p>Lini lengkap trainer industri: Mitsubishi, Siemens, Schneider PLC dengan sistem pneumatik dan hidrolik.</p>
-            </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+            <div class="machine-card"><div class="machine-qty">3</div><h4>3D Print Creality Ender 3</h4><p class="machine-spec">FDM, 220×220×250mm. Workhorse untuk prototyping cepat dan produksi UMKM</p><span class="machine-badge">3D Printing · FDM</span></div>
           </div>
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="project-card h-100">
-              <span class="status-badge status-future mb-3">Future</span>
-              <h4>NRM-1 "Archer"</h4>
-              <div class="field-badge mb-2">IoT · RC · Mechanical Design</div>
-              <p>Tracked/wheeled RC launcher platform. IoT telemetry, mechanical assembly, dan embedded control system.</p>
-            </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="machine-card"><div class="machine-qty">1</div><h4>Bambu Lab X1 Carbon</h4><p class="machine-spec">Multi-material, high-speed CoreXY, AMS. Printer flagship presisi tinggi</p><span class="machine-badge">3D Printing · Premium</span></div>
           </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="machine-card"><div class="machine-qty">2</div><h4>CNC Router 3040</h4><p class="machine-spec">3 Axis, 300×400mm. Engraving, acrylic, PCB milling</p><span class="machine-badge">CNC · 3 Axis</span></div>
+          </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+            <div class="machine-card"><div class="machine-qty">1</div><h4>CNC Router SYIL X7/X5 Vertical</h4><p class="machine-spec">Vertical CNC machining center. Komponen mekanik skala menengah</p><span class="machine-badge">CNC · Vertical</span></div>
+          </div>
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="machine-card"><div class="machine-qty">7</div><h4>Arm Robot Self-Assembled</h4><p class="machine-spec">Yalong YL-1B config. Platform demonstrasi robotika industri edukasi</p><span class="machine-badge">Robotics · Arm · Industrial</span></div>
+          </div>
+        </div>
+        <div class="text-center mt-4 font-mono text-muted-nu" style="font-size:var(--text-sm);" data-aos="fade-up">2 CNC 5-Axis · 3 Ender 3 · 1 X1 Carbon · 2 CNC Router 3040 · 1 SYIL Vertical · 7 Arm Robot</div>
+      </div>
+    </section>
+    <div class="section-divider"></div>
+
+    <!-- LAB PROJECTS -->
+    <section class="section-nu bg-secondary-nu">
+      <div class="container-nu">
+        <h2 class="heading-section text-center mb-5" data-aos="fade-up">Lab Active Projects</h2>
+        <div class="row g-4">
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100"><div class="project-card h-100"><span class="status-badge status-active mb-3">Active</span><h4>NuRichter Labs 2.0</h4><div class="field-badge mb-2">IoT · Computer Vision · Business Expansion</div><p>Generasi berikutnya NuRichter Labs — ekspansi kapabilitas IoT dengan integrasi Computer Vision. Roadmap menuju Lab skala industrial menengah.</p></div></div>
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="200"><div class="project-card h-100"><span class="status-badge status-active mb-3">Active</span><h4>Miniature of Automation Industrial 5.0</h4><div class="field-badge mb-2">Human-Centric · CV · Cobots</div><p>Industrial 5.0: miniatur industri yang menggabungkan pikiran manusia dan mesin (cobots). Human-centric approach.</p></div></div>
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100"><div class="project-card h-100"><span class="status-badge status-future mb-3">Future</span><h4>NRM-1 "Archer"</h4><div class="field-badge mb-2">IoT · RC · Mechanical Design</div><p>Tracked/wheeled RC launcher platform. IoT telemetry, mechanical assembly, embedded control.</p></div></div>
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="200"><div class="project-card h-100"><span class="status-badge status-future mb-3">Future</span><h4>NFF-X "Axel"</h4><div class="field-badge mb-2">IoT · RC · Mechanical Design</div><p>Tracked/wheeled RC Plane. Fixed-wing drone dengan chassis ground-vehicle hybrid concept.</p></div></div>
         </div>
       </div>
     </section>
     <div class="section-divider"></div>
 
-    <!-- CTA -->
     <section class="cta-section">
       <div class="container-nu" style="position:relative;z-index:1;">
         <h2 class="heading-section" data-aos="fade-up">Ingin Berkolaborasi dengan Lab Kami?</h2>
@@ -131,19 +99,7 @@
         <div class="mt-4" data-aos="fade-up" data-aos-delay="200"><a href="contact.html" class="btn btn-primary">Hubungi Kami</a></div>
       </div>
     </section>
-
-    <footer class="footer-nu">
-      <div class="container-nu"><div class="row g-5">
-        <div class="col-lg-5"><a href="index.html" class="nav-brand mb-3" style="display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" style="width:24px;height:24px;"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a><p class="font-mono text-accent mb-3" style="font-size:var(--text-xs);">Richterize The Infinity ∞</p></div>
-        <div class="col-6 col-lg-3"><h6>Navigate</h6><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="lab.html">Labs</a></div>
-        <div class="col-6 col-lg-4"><h6>Connect</h6><a href="https://wa.me/6281280717345" target="_blank">WhatsApp: 081280717345</a></div>
-      </div></div>
-      <div class="footer-bottom">© <span class="footer-year"></span> NuRichter Workspace · Richterize The Infinity ∞</div>
-    </footer>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script src="js/main.js"></script>
-</body>
-</html>
+<footer class="footer-nu"><div class="container-nu"><div class="row g-5"><div class="col-lg-5"><a href="index.html" class="nav-brand mb-3" style="display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" style="width:24px;height:24px;"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="#fff"/></svg><span>NuRichter Workspace</span></a><p class="font-mono text-accent mb-2" style="font-size:var(--text-xs);">Richterize The Infinity ∞</p><div class="sosmed-row"><a href="https://id.linkedin.com/in/ibnu-khoirul-anwar-15503538b" target="_blank"><i class="bi bi-linkedin"></i></a><a href="https://www.instagram.com/ibnu_lpg/" target="_blank"><i class="bi bi-instagram"></i></a><a href="https://www.youtube.com/@NuRichter" target="_blank"><i class="bi bi-youtube"></i></a><a href="https://github.com/NuRichter" target="_blank"><i class="bi bi-github"></i></a></div></div><div class="col-6 col-lg-3"><h6>Navigate</h6><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a><a href="products.html">Products</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="lab.html">Labs</a></div><div class="col-6 col-lg-4"><h6>Connect</h6><a href="https://wa.me/6281280717345" target="_blank"><i class="bi bi-whatsapp"></i> 081280717345</a><a href="mailto:ibnurorotan@gmail.com"><i class="bi bi-envelope"></i> ibnurorotan@gmail.com</a></div></div></div><div class="footer-bottom">© <span class="footer-year"></span> NuRichter Workspace · Richterize The Infinity ∞</div></footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script><script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script><script src="js/main.js"></script>
+</body></html>
