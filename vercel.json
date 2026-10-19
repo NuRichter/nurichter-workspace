@@ -1,13 +1,17 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/about", "destination": "/about.html" },
-    { "source": "/services", "destination": "/services.html" },
-    { "source": "/projects", "destination": "/projects.html" },
-    { "source": "/products", "destination": "/products.html" },
-    { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/history", "destination": "/history.html" },
-    { "source": "/lab", "destination": "/lab.html" }
+  "headers": [
+    {
+      "source": "/(img|js/vendor|i18n)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
   ]
 }
