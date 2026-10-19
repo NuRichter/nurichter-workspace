@@ -25,10 +25,14 @@
   /* ---------------------------------------------------------- menu ponsel */
   const menuBtn = $(".menu-btn");
   const mnav = $("#mnav");
-  menuBtn?.addEventListener("click", () => {
-    const open = menuBtn.getAttribute("aria-expanded") !== "true";
+  const setMenu = (open) => {
     menuBtn.setAttribute("aria-expanded", String(open));
     mnav.hidden = !open;
+    if (open) mnav.querySelector("a")?.focus();
+  };
+  menuBtn?.addEventListener("click", () => setMenu(menuBtn.getAttribute("aria-expanded") !== "true"));
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" && menuBtn?.getAttribute("aria-expanded") === "true") { setMenu(false); menuBtn.focus(); }
   });
 
   /* ---------------------------------------------------------- command palette */
@@ -215,7 +219,47 @@
       apply();
     }));
     input.addEventListener("input", apply);
+
+    // urutkan kolom: No., Tahun, Proyek, Status
+    const tbody = arch.tBodies[0];
+    const ORDER = { active: 0, future: 1, temporal: 2, finished: 3, abandoned: 4 };
+    const keyOf = (r, col) => {
+      if (col === 0) return parseInt(r.cells[0].textContent.replace(/\D/g, ""), 10);
+      if (col === 1) { const y = parseInt(r.cells[1].textContent, 10); return isNaN(y) ? 9999 : y; }
+      if (col === 4) return ORDER[r.dataset.s] ?? 9;
+      return norm(r.cells[col].textContent);
+    };
+    $$("thead th", arch).forEach((th, col) => {
+      if (col === 3) return;
+      const b = document.createElement("button");
+      b.type = "button";
+      b.append(...th.childNodes);
+      th.append(b);
+      th.setAttribute("aria-sort", col === 0 ? "ascending" : "none");
+      b.addEventListener("click", () => {
+        const dir = th.getAttribute("aria-sort") === "ascending" ? "descending" : "ascending";
+        $$("thead th", arch).forEach((x) => x.hasAttribute("aria-sort") && x.setAttribute("aria-sort", "none"));
+        th.setAttribute("aria-sort", dir);
+        const sorted = rows.slice().sort((r1, r2) => {
+          const a = keyOf(r1, col), z = keyOf(r2, col);
+          return (a > z ? 1 : a < z ? -1 : 0) * (dir === "ascending" ? 1 : -1);
+        });
+        tbody.append(...sorted);
+      });
+    });
   }
+
+  /* ---------------------------------------------------------- salin warna (halaman brand) */
+  $$("[data-copy]").forEach((btn) => btn.addEventListener("click", async () => {
+    const val = btn.dataset.copy;
+    try { await navigator.clipboard.writeText(val); } catch (_) {
+      const ta = document.createElement("textarea"); ta.value = val; document.body.append(ta); ta.select();
+      try { document.execCommand("copy"); } catch (__) {} ta.remove();
+    }
+    btn.dataset.done = `${(window.NR_TT ? window.NR_TT("js.copied", "Disalin") : "Disalin")} ${val}`;
+    btn.classList.add("done");
+    setTimeout(() => btn.classList.remove("done"), 1600);
+  }));
 
   /* ---------------------------------------------------------- formulir kontak → WhatsApp */
   const form = $(".cform");

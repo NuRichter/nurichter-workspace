@@ -8,8 +8,11 @@ Semua teks diberi kunci terjemahan (data-t). Sumber bahasa Indonesia
 diekspor ke i18n/id.json; terjemahan lain ada di _build/i18n/<kode>.json
 dan disalin ke i18n/ saat build. Tidak butuh dependensi.
 """
+import base64
+import hashlib
 import json
 import os
+import re
 import shutil
 import sys
 from datetime import date
@@ -72,10 +75,27 @@ NAV = [
     ("contact.html", "nav.contact", "Kontak"),
 ]
 EXTRA_NAV = [("index.html", "nav.home", "Beranda"), ("history.html", "nav.history", "Sejarah"), ("credits.html", "nav.credits", "Kredit foto")]
+LEGAL_NAV = [("brand.html", "nav.brand", "Identitas brand"), ("privacy.html", "nav.privacy", "Kebijakan privasi"),
+             ("terms.html", "nav.terms", "Ketentuan penggunaan"), ("credits.html", "nav.credits", "Kredit foto")]
+
+# jejak halaman (breadcrumb): halaman -> daftar (href, kunci, label) sebelum halaman itu sendiri
+PARENT = {
+    "history.html": [("about.html", "nav.about", "Tentang")],
+    "nurichter-nrmarcher.html": [("lab.html", "nav.labs", "Labs")],
+    "nurichter-mulya-jaya.html": [("products.html", "nav.brands", "Sub-brand")],
+    "nurichter-rigroom.html": [("products.html", "nav.brands", "Sub-brand")],
+    "nurichter-ragnarok.html": [("products.html", "nav.brands", "Sub-brand")],
+}
+OG = {"index.html": "og", "works.html": "og-works", "projects.html": "og-projects", "products.html": "og-products",
+      "services.html": "og-services", "lab.html": "og-lab", "about.html": "og-about", "history.html": "og-history",
+      "contact.html": "og-contact", "brand.html": "og-brand", "nurichter-mulya-jaya.html": "og-mulya-jaya",
+      "nurichter-rigroom.html": "og-rigroom", "nurichter-ragnarok.html": "og-ragnarok", "nurichter-nrmarcher.html": "og-archer"}
 
 SHEETS = {}
 
-BOLT = '<svg class="bolt" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L5 13h6l-3 9 11-13h-6l3-7z" fill="currentColor"/></svg>'
+MARK_PATH = ("M415 0L0 492L48 533.5L306 533.5L285 781L700 289L652 247.5L394 247.5Z"
+             "M335 191L310 493.5L81 493.5Z" "M365 590L390 287.5L619 287.5Z")
+BOLT = f'<svg class="bolt" viewBox="0 0 700 781" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="{MARK_PATH}"/></svg>'
 ARROW = '<svg class="ar" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>'
 EXT = '<svg class="ar" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>'
 
@@ -178,7 +198,7 @@ def footer_html(current):
     sheet = SHEETS.get(current, ("00", ""))[0]
     total = len(SHEETS)
     soc = "".join(f'<li><a href="{u}" target="_blank" rel="noopener">{n}<span>{h}</span></a></li>' for n, u, h in SOCIAL)
-    pages = "".join(f'<li><a href="{h}">{T(k, l)}</a></li>' for h, k, l in [EXTRA_NAV[0]] + NAV + EXTRA_NAV[1:])
+    pages = "".join(f'<li><a href="{h}">{T(k, l)}</a></li>' for h, k, l in [EXTRA_NAV[0]] + NAV + EXTRA_NAV[1:2])
     return f'''
 <footer class="foot">
   <div class="wrap">
@@ -194,6 +214,7 @@ def footer_html(current):
       <div><h3>{T("foot.profiles", "Profil")}</h3><ul class="foot-list soc">{soc}</ul></div>
       <div><h3>{T("nav.about", "Tentang")}</h3><p class="mute">{T("foot.about", "Workspace engineering dan kreatif yang dibangun Ibnu Khoirul Anwar sejak 2020, diresmikan 2025. Berbasis di Rorotan, Jakarta Utara.")}</p></div>
     </div>
+    <ul class="foot-legal">{"".join(f'<li><a href="{h}">{T(k, l)}</a></li>' for h, k, l in LEGAL_NAV)}</ul>
     <div class="tblock">
       <div><span>{T("tb.project", "Proyek")}</span>NuRichter Workspace</div>
       <div><span>{T("tb.sheet", "Lembar")}</span>{sheet} / {total:02d}</div>
@@ -214,12 +235,48 @@ def footer_html(current):
 {lang_menu()}'''
 
 
-def layout(fname, pid, title, desc, body, extra_head="", scripts=""):
+def crumbs_html(fname, title_key, title):
+    if fname in ("index.html", "404.html"):
+        return "", None
+    trail = [("index.html", "nav.home", "Beranda")] + PARENT.get(fname, [])
+    items = "".join(f'<li><a href="{h}">{T(k, l)}</a></li>' for h, k, l in trail)
+    title = K.get(title_key, title)
+    items += f'<li aria-current="page">{T(title_key, title)}</li>'
+    ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "name": l, "item": SITE["url"] + "/" + ("" if h == "index.html" else h.replace(".html", ""))}
+        for i, (h, k, l) in enumerate(trail)] + [{"@type": "ListItem", "position": len(trail) + 1, "name": re.sub("<[^>]+>", "", title)}]}
+    return (f'<nav class="crumbs wrap" data-ta="aria-label:ui.crumbs" aria-label="{R("ui.crumbs", "Jejak halaman")}"><ol>{items}</ol></nav>', ld)
+
+
+ORG_LD = {
+    "@context": "https://schema.org", "@type": "Organization", "@id": SITE["url"] + "/#org",
+    "name": "NuRichter Workspace", "alternateName": "NuRichter", "url": SITE["url"] + "/",
+    "logo": SITE["url"] + "/icon-512.png", "slogan": "Richterize The Infinity", "foundingDate": "2020",
+    "email": SITE["email_pro"], "telephone": "+62-812-8071-7345",
+    "address": {"@type": "PostalAddress", "addressLocality": "Rorotan, Jakarta Utara", "addressRegion": "DKI Jakarta", "addressCountry": "ID"},
+    "founder": {"@type": "Person", "name": SITE["founder"], "jobTitle": "Founder & CEO", "sameAs": ["https://www.linkedin.com/in/nurichter", "https://github.com/NuRichter", "https://medium.com/@ibnurorotan"]},
+    "sameAs": [u for _, u, _ in SOCIAL],
+}
+
+HEAD_JS = ('(function(){var d=document.documentElement;try{var t=localStorage.getItem("nr-theme");if(t)d.dataset.theme=t}catch(_){}'
+           'var L="' + " ".join(c for c, *_ in LANGS) + '".split(" "),l=null;try{l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("nr-lang")}catch(_){}'
+           'if(!l){var n=(navigator.languages||[navigator.language||""]);for(var i=0;i<n.length;i++){var c=String(n[i]).toLowerCase().split("-")[0];if(L.indexOf(c)>-1){l=c;break}}}'
+           'if(l&&l!=="id"&&L.indexOf(l)>-1){d.lang=l;d.classList.add("i18n-wait");if(/^(ar|ur|fa)$/.test(l))d.dir="rtl";setTimeout(function(){d.classList.remove("i18n-wait")},2500)}})()')
+INLINE_HEAD_JS = None
+
+
+def layout(fname, pid, title, desc, body, extra_head="", scripts="", crumb_key=None, crumb_title=None, ld=None):
     canon = SITE["url"] + "/" + ("" if fname == "index.html" else fname.replace(".html", ""))
     full_title = f"{title} — NuRichter Workspace" if fname != "index.html" else "NuRichter Workspace — Richterize The Infinity"
     R(f"meta.{pid}.title", full_title)
     R(f"meta.{pid}.desc", desc)
     hreflang = "".join(f'\n<link rel="alternate" hreflang="{c}" href="{canon}?lang={c}">' for c, *_ in LANGS)
+    crumbs, crumb_ld = crumbs_html(fname, crumb_key if crumb_key is not None else f"page.{pid}.title", crumb_title or title)
+    lds = [ORG_LD] + ([crumb_ld] if crumb_ld else []) + (ld or [])
+    ld_html = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in lds)
+    og = f'{SITE["url"]}/img/og/{OG.get(fname, "og")}.png'
+    global INLINE_HEAD_JS
+    INLINE_HEAD_JS = HEAD_JS
     return f'''<!doctype html>
 <html lang="id" dir="ltr">
 <head>
@@ -236,21 +293,29 @@ def layout(fname, pid, title, desc, body, extra_head="", scripts=""):
 <meta property="og:title" content="{e(full_title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:url" content="{canon}">
-<meta property="og:image" content="{SITE["url"]}/img/og.png">
+<meta property="og:image" content="{og}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="id_ID">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{og}">
 <meta name="theme-color" content="#f1efe9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0f0f0e" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<script>(function(){{var d=document.documentElement;try{{var t=localStorage.getItem("nr-theme");if(t)d.dataset.theme=t}}catch(_){{}}var L="{" ".join(c for c, *_ in LANGS)}".split(" "),l=null;try{{l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("nr-lang")}}catch(_){{}}if(!l){{var n=(navigator.languages||[navigator.language||""]);for(var i=0;i<n.length;i++){{var c=String(n[i]).toLowerCase().split("-")[0];if(L.indexOf(c)>-1){{l=c;break}}}}}}if(l&&l!=="id"&&L.indexOf(l)>-1){{d.lang=l;d.classList.add("i18n-wait");if(/^(ar|ur|fa)$/.test(l))d.dir="rtl";setTimeout(function(){{d.classList.remove("i18n-wait")}},2500)}}}})()</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<script>{HEAD_JS}</script>
+<link rel="preload" href="fonts/archivo-vf.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/plexmono-medium.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
+{ld_html}
 {extra_head}
 </head>
 <body data-page="{fname}">
 {nav_html(fname)}
 <main id="main">
+{crumbs}
 {body}
 </main>
 {footer_html(fname)}
@@ -656,7 +721,7 @@ def page_contact():
     soc = "".join(f'<li><a href="{u}" target="_blank" rel="noopener"><b>{n}</b><span>{h}</span>{EXT}</a></li>' for n, u, h in SOCIAL)
     needs = ["Kolaborasi proyek", "Workshop & pelatihan", "Sistem IoT", "Konsultasi elektrikal", "Pesan produksi", "Konsultasi IoT", "Riset / AI", "Lainnya"]
     opts = "".join(f'<option value="{n}" data-t="need.{i}">{R(f"need.{i}", n)}</option>' for i, n in enumerate(needs))
-    body = page_head("contact", "Lembar K", "Kontak", "Ceritakan masalahnya, bukan hanya solusinya. Pesan dari formulir di bawah dikirim lewat WhatsApp, jadi balasan biasanya datang di hari yang sama.")
+    body = page_head("contact", "Lembar K", "Kontak", "Ceritakan masalahnya, bukan hanya solusinya. Formulir di bawah membuka WhatsApp dengan pesan yang sudah terisi, jadi Anda bisa langsung berbicara dengan kami.")
     body += f'''
 <div class="wrap contact">
   <form class="cform" novalidate>
@@ -677,8 +742,14 @@ def page_contact():
     </dl>
     <ul class="soc-list">{soc}</ul>
   </aside>
-</div>'''
-    return layout("contact.html", "contact", "Kontak", "Hubungi NuRichter Workspace lewat WhatsApp atau email.", body)
+</div>
+<section class="wrap sec" id="faq">
+  {sec_head("?", T("faq.h", "Tanya jawab"))}
+  <div class="faq">{"".join(f'<details><summary>{T(f"faq.{i}.q", q)}</summary><div class="faq-a"><p>{T(f"faq.{i}.a", a)}</p></div></details>' for i, (q, a) in enumerate(FAQ))}</div>
+</section>'''
+    faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub("<[^>]+>", "", a)}} for q, a in FAQ]}
+    return layout("contact.html", "contact", "Kontak", "Hubungi NuRichter Workspace lewat WhatsApp atau email.", body, ld=[faq_ld])
 
 
 def page_credits():
@@ -703,12 +774,108 @@ def page_404():
     return layout("404.html", "404", "404", "Halaman tidak ditemukan.", body)
 
 
+FAQ = [
+    ("Bagaimana cara memulai proyek dengan NuRichter?",
+     "Kirim pesan lewat formulir di atas atau WhatsApp. Ceritakan masalahnya, lokasinya, dan kapan dibutuhkan. Setelah konsultasi, kami membuat rancangan berisi gambar, daftar komponen, biaya, dan jadwal sebelum ada yang dibeli."),
+    ("Bagaimana biaya ditentukan?",
+     "Biaya dihitung per proyek setelah tahap perancangan, karena tiap sistem berbeda. Anda menerima estimasi biaya dan jadwal tertulis sebelum pekerjaan dimulai."),
+    ("Di mana lokasi NuRichter dan produksinya?",
+     "Basis kami di Rorotan, Jakarta Utara. Produksi fisik (CNC, 3D print, perakitan) dilakukan di Workshop Mekatronika SMK Negeri 4 Jakarta. Mitra kami tersebar di Jakarta dan Bekasi."),
+    ("Apakah melayani pesanan plakat, medali, atau piala dalam jumlah banyak?",
+     "Ya. Pesanan massal untuk institusi ditangani Mulya Jaya, unit manufaktur CNC dan 3D print kami."),
+    ("Apakah bisa mengadakan workshop atau pelatihan untuk sekolah?",
+     "Bisa. Kami sudah bekerja dengan lebih dari 50 sekolah dan kampus, dan unit trainer PLC Ragnarok dibuat khusus untuk pendidikan vokasi. Pilih “Workshop & pelatihan” di formulir."),
+    ("Apa yang terjadi dengan data yang saya isi di formulir?",
+     "Formulir tidak mengirim data ke server situs ini. Browser Anda membuka WhatsApp dengan pesan yang sudah terisi, dan Anda yang memutuskan untuk mengirimnya. Detailnya ada di <a href=\"privacy.html\">kebijakan privasi</a>."),
+]
+
+
+def page_brand_identity():
+    from data import SITE as _S  # noqa: F401
+    swatches = [("Richter Blue", "#1C6FA5", "#5AA7DD", "28 111 165", "brand.c.blue", "Warna utama: mark, tautan, tombol utama."),
+                ("Infinity Violet", "#8C52FF", "#A47BFF", "140 82 255", "brand.c.violet", "Energi: status aktif, puncak gelombang, sorotan. Dipakai hemat."),
+                ("Ink", "#151513", "#ECEBE6", "21 21 19", "brand.c.ink", "Teks dan garis gambar."),
+                ("Drafting Paper", "#F1EFE9", "#0F0F0E", "241 239 233", "brand.c.paper", "Latar utama, kertas gambar teknik.")]
+    sw = "".join(f'''<li class="swatch"><button type="button" class="sw-chip" data-copy="{hx}" style="--c:{hx}" aria-label="{nm} {hx}"><span class="sr">{R("ui.copy", "Salin")}</span></button>
+<div><b>{nm}</b><span class="mono">{hx} · RGB {rgb}</span><span class="mono mute">{T("brand.dark", "Mode gelap")}: {dk}</span><p>{T(key, desc)}</p></div></li>''' for nm, hx, dk, rgb, key, desc in swatches)
+    logos = [("nurichter-horizontal-primary", "Horizontal", "light"), ("nurichter-horizontal-reverse-blue", "Horizontal · gelap", "dark"),
+             ("nurichter-stacked-primary", "Bertumpuk", "light"), ("nurichter-mark-blue", "Mark", "light"),
+             ("nurichter-mark-white", "Mark · putih", "blue"), ("nurichter-compact-primary", "Ringkas", "light")]
+    lg = "".join(f'''<li class="logo-cell logo-{bg}"><img src="brand/{f}.svg" alt="{lbl}" loading="lazy"><div class="logo-dl"><span class="mono">{lbl}</span><span><a href="brand/{f}.svg" download>SVG</a> · <a href="brand/{f}.png" download>PNG</a></span></div></li>''' for f, lbl, bg in logos)
+    body = page_head("identity", "Lembar R", "Identitas brand", "Satu mark, dua warna, dua keluarga huruf. Halaman ini untuk rekan media, mitra, dan siapa pun yang perlu memakai logo NuRichter dengan benar.",
+                     f'''<div class="links"><a class="btn btn-solid" href="brand/NuRichter-Brand-Kit.zip" download>{T("brand.dl.kit", "Unduh brand kit")} · ZIP 5,8 MB</a><a class="btn" href="brand/NuRichter-Brand-Guidelines.pdf">{T("brand.dl.pdf", "Panduan identitas")} · PDF</a></div>''')
+    body += f'''
+<section class="wrap sec">
+  {sec_head("01", T("brand.s1", "Mark"))}
+  <div class="brand-hero">
+    <div class="brand-anim"><img src="brand/nurichter-mark-animated.svg" alt="" width="740" height="821"></div>
+    <div class="brand-story">
+      <p class="lede">{T("brand.story1", "Nama NuRichter diambil dari skala Richter: alat untuk membaca guncangan dan menuliskannya sebagai angka. Mark-nya dua segitiga yang disatukan satu batang miring, terbaca sebagai petir sekaligus lonjakan seismogram.")}</p>
+      <p>{T("brand.story2", "Bentuknya simetris putar 180°: diputar setengah lingkaran, ia tetap sama. Tidak ada awal dan akhir, seperti moto Richterize the Infinity.")}</p>
+      <dl class="kpis"><div><dt>700 × 781</dt><dd>{T("brand.k1", "unit kotak dasar")}</dd></div><div><dt>180°</dt><dd>{T("brand.k2", "simetri putar")}</dd></div><div><dt>40 u</dt><dd>{T("brand.k3", "tebal batang horizontal")}</dd></div></dl>
+    </div>
+  </div>
+</section>
+<section class="wrap sec">
+  {sec_head("02", T("brand.s2", "Logo"), f'<span class="mute">SVG · PNG 1024 px</span>')}
+  <ul class="logo-grid">{lg}</ul>
+  <p class="mute brand-note">{T("brand.rule", "Beri ruang kosong minimal seperempat tinggi mark di setiap sisi. Jangan meregangkan, memutar, memberi gradien, atau mengganti huruf logo.")}</p>
+</section>
+<section class="wrap sec">
+  {sec_head("03", T("brand.s3", "Warna"), f'<span class="mute">{T("brand.copyhint", "Klik warna untuk menyalin HEX")}</span>')}
+  <ul class="swatches">{sw}</ul>
+</section>
+<section class="wrap sec">
+  {sec_head("04", T("brand.s4", "Tipografi"))}
+  <div class="type-spec">
+    <div><p class="eyebrow">Display · Archivo ExtraBold 72%</p><p class="display type-big">Richterize 0123</p></div>
+    <div><p class="eyebrow">{T("brand.t.body", "Teks · Archivo Regular")}</p><p>{T("brand.t.sample", "Wellsense membaca sepuluh aliran sensor sumur lepas pantai dan menandai anomali sebelum produksi hilang.")}</p></div>
+    <div><p class="eyebrow">{T("brand.t.label", "Label · IBM Plex Mono Medium")}</p><p class="mono type-mono">LEMBAR W · REV 2026.10</p></div>
+  </div>
+  <p class="mute brand-note">{T("brand.fonts", "Kedua huruf berlisensi SIL Open Font License dan disertakan di brand kit.")}</p>
+</section>'''
+    return layout("brand.html", "identity", "Identitas brand", "Logo, warna, tipografi, dan aset unduhan resmi NuRichter Workspace.", body)
+
+
+def page_privacy():
+    sections = [
+        ("pv.1", "Siapa kami", "Situs ini dikelola NuRichter Workspace (Ibnu Khoirul Anwar), Rorotan, Jakarta Utara. Pertanyaan tentang data pribadi: <a href=\"mailto:ibnu@nurichterworkspace.com\">ibnu@nurichterworkspace.com</a>."),
+        ("pv.2", "Yang tidak kami lakukan", "Situs ini tidak memakai cookie, tidak memasang analitik atau piksel pelacak, tidak menampilkan iklan, dan tidak punya sistem akun."),
+        ("pv.3", "Yang disimpan di perangkat Anda", "Pilihan tema dan bahasa disimpan di <code>localStorage</code> browser Anda (<code>nr-theme</code>, <code>nr-lang</code>). Hasil terjemahan otomatis disimpan sementara di <code>sessionStorage</code>. Data ini tidak pernah dikirim ke kami dan bisa dihapus lewat pengaturan browser."),
+        ("pv.4", "Formulir kontak", "Formulir tidak mengirim apa pun ke server situs ini. Saat Anda menekan tombol kirim, browser membuka WhatsApp dengan pesan berisi nama, email, instansi, kebutuhan, dan pesan Anda. Anda yang memutuskan untuk mengirimnya. Setelah terkirim, pesan diproses oleh WhatsApp (Meta) sesuai kebijakannya, dan kami menyimpannya di percakapan untuk menindaklanjuti permintaan Anda."),
+        ("pv.5", "Pihak ketiga", "Hosting: Vercel, yang mencatat log teknis seperti alamat IP dan jenis browser untuk keamanan dan operasional. Font: huruf utama disajikan dari server kami sendiri; hanya saat Anda memilih bahasa beraksara non-Latin (misalnya Mandarin, Arab, atau Hindi) browser mengunduh font Noto dari Google Fonts. Terjemahan di perangkat memakai fitur bawaan browser dan tidak melewati server kami. Tautan ke Medium, GitHub, LinkedIn, YouTube, dan Instagram tunduk pada kebijakan masing-masing."),
+        ("pv.6", "Dasar dan hak Anda", "Kami memproses data sesuai Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi. Dasar pemrosesan adalah persetujuan Anda saat mengirim pesan. Anda berhak meminta akses, perbaikan, atau penghapusan data, serta menarik persetujuan, dengan menghubungi email di atas."),
+        ("pv.7", "Penyimpanan dan insiden", "Pesan disimpan selama diperlukan untuk menindaklanjuti permintaan atau hubungan kerja, lalu dihapus atas permintaan. Jika terjadi kegagalan pelindungan data pribadi, kami memberi tahu pihak yang terdampak paling lambat 3 × 24 jam sesuai UU PDP."),
+        ("pv.8", "Anak", "Situs ini tidak ditujukan untuk anak tanpa pendampingan orang tua atau guru. Jangan mengirim data pribadi anak melalui formulir."),
+    ]
+    items = "".join(f'<section class="legal-s"><h2>{T(k + ".h", h)}</h2><p>{T(k, b)}</p></section>' for k, h, b in sections)
+    body = page_head("privacy", "Lembar P", "Kebijakan privasi", "Versi singkatnya: situs ini tidak melacak Anda. Berlaku sejak 19 Oktober 2026.")
+    body += f'<div class="wrap legal">{items}</div>'
+    return layout("privacy.html", "privacy", "Kebijakan privasi", "Kebijakan privasi NuRichter Workspace: tanpa cookie, tanpa pelacak.", body)
+
+
+def page_terms():
+    sections = [
+        ("tm.1", "Konten situs", "Teks, gambar teknik, dan kode situs ini milik NuRichter Workspace kecuali disebutkan lain. Anda boleh mengutip dan menautkan dengan menyebut sumber."),
+        ("tm.2", "Logo dan merek", "Logo dan nama NuRichter, Mulya Jaya, RigRoom, dan Ragnarok hanya boleh dipakai untuk merujuk kepada kami, sesuai <a href=\"brand.html\">panduan identitas</a>. Jangan memakainya dengan cara yang menyiratkan dukungan atau kerja sama yang tidak ada."),
+        ("tm.3", "Foto pihak ketiga", "Foto ilustrasi berlisensi Creative Commons milik pemotretnya masing-masing. Lisensi dan atribusinya ada di halaman <a href=\"credits.html\">kredit foto</a>."),
+        ("tm.4", "Informasi, bukan penawaran", "Informasi layanan, angka proyek, dan kapabilitas di situs ini bersifat umum. Lingkup, harga, dan jadwal pekerjaan hanya mengikat jika disepakati tertulis untuk proyek tertentu."),
+        ("tm.5", "Tautan keluar", "Situs ini menautkan ke layanan lain seperti Medium, GitHub, dan YouTube. Kami tidak bertanggung jawab atas isi atau kebijakan situs tersebut."),
+        ("tm.6", "Hukum yang berlaku", "Ketentuan ini tunduk pada hukum Republik Indonesia. Pertanyaan: <a href=\"mailto:ibnu@nurichterworkspace.com\">ibnu@nurichterworkspace.com</a>."),
+    ]
+    items = "".join(f'<section class="legal-s"><h2>{T(k + ".h", h)}</h2><p>{T(k, b)}</p></section>' for k, h, b in sections)
+    body = page_head("terms", "Lembar U", "Ketentuan penggunaan", "Aturan pakai situs, konten, dan logo NuRichter. Berlaku sejak 19 Oktober 2026.")
+    body += f'<div class="wrap legal">{items}</div>'
+    return layout("terms.html", "terms", "Ketentuan penggunaan", "Ketentuan penggunaan situs dan logo NuRichter Workspace.", body)
+
+
 # ------------------------------------------------------------------ indeks, sitemap, i18n
 
 def search_index():
     idx = [{"t": "Beranda", "tk": "nav.home", "u": "index.html", "k": "page"}]
     idx += [{"t": l, "tk": k, "u": h, "k": "page"} for h, k, l in NAV]
-    idx += [{"t": l, "tk": k, "u": h, "k": "page"} for h, k, l in EXTRA_NAV[1:]]
+    idx += [{"t": l, "tk": k, "u": h, "k": "page"} for h, k, l in EXTRA_NAV[1:2] + LEGAL_NAV]
+    idx += [{"t": "Tanya jawab", "tk": "faq.h", "u": "contact.html#faq", "k": "page"}]
     idx += [{"t": w["title"], "tk": f'w.{w["id"]}.title', "u": f'works.html#{w["id"]}', "k": "work", "d": w["kicker"], "dk": f'w.{w["id"]}.kicker'} for w in WORKS]
     idx += [{"t": b["name"], "u": b["page"], "k": "brand", "d": b["role"], "dk": f'b.{b["id"]}.role'} for b in BRANDS]
     idx += [{"t": p[1], "tk": f"p.{i}.t", "u": p[5] or "projects.html", "k": "project", "d": p[2], "dk": f"p.{i}.f"} for i, p in enumerate(PROJECTS, 1)]
@@ -725,6 +892,7 @@ JS_STRINGS = {
     "js.form.ok": "WhatsApp dibuka di tab baru. Kalau tidak muncul, cek pemblokir pop-up.",
     "js.form.hello": "Halo NuRichter Workspace,", "js.form.name": "Nama", "js.form.org": "Instansi", "js.form.need": "Kebutuhan",
     "js.translating": "Menerjemahkan di perangkat…",
+    "js.copied": "Disalin",
 }
 
 
@@ -774,6 +942,9 @@ def main():
         "about.html": page_about,
         "history.html": page_history,
         "contact.html": page_contact,
+        "brand.html": page_brand_identity,
+        "privacy.html": page_privacy,
+        "terms.html": page_terms,
         "credits.html": page_credits,
         "catalog.html": page_catalog,
         "404.html": page_404,
@@ -790,7 +961,46 @@ def main():
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(sitemap(pages))
     write_i18n()
+    write_vercel()
     print(f"{len(pages)} halaman ditulis.")
+
+
+def write_vercel():
+    """vercel.json dibuat dari sini supaya hash CSP skrip inline selalu cocok."""
+    h = base64.b64encode(hashlib.sha256(HEAD_JS.encode("utf-8")).digest()).decode()
+    csp = "; ".join([
+        "default-src 'self'",
+        f"script-src 'self' 'sha256-{h}'",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+        "font-src 'self' https://fonts.gstatic.com",
+        "img-src 'self' data:",
+        "connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
+        "object-src 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+        "frame-ancestors 'none'",
+        "upgrade-insecure-requests",
+    ])
+    conf = {
+        "cleanUrls": True,
+        "trailingSlash": False,
+        "headers": [
+            {"source": "/(fonts|js/vendor)/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]},
+            {"source": "/(img|i18n|brand)/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=604800"}]},
+            {"source": "/(.*)", "headers": [
+                {"key": "Content-Security-Policy", "value": csp},
+                {"key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload"},
+                {"key": "X-Content-Type-Options", "value": "nosniff"},
+                {"key": "X-Frame-Options", "value": "DENY"},
+                {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"},
+                {"key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"},
+                {"key": "Cross-Origin-Opener-Policy", "value": "same-origin"},
+            ]},
+        ],
+    }
+    with open(os.path.join(ROOT, "vercel.json"), "w", encoding="utf-8") as f:
+        json.dump(conf, f, indent=2)
+        f.write("\n")
 
 
 if __name__ == "__main__":

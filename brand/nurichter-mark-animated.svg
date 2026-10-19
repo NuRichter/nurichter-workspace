@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 740 821" width="740" height="821" role="img" aria-label="NuRichter">
+<style>
+.o{fill:none;stroke:#1C6FA5;stroke-width:10;stroke-linejoin:miter;stroke-dasharray:3600;stroke-dashoffset:3600;animation:d 1.6s cubic-bezier(.6,.05,.2,1) forwards}
+.f{fill:#1C6FA5;opacity:0;animation:f .5s 1.4s ease-out forwards}
+@keyframes d{to{stroke-dashoffset:0}}@keyframes f{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.o{animation:none;stroke-dashoffset:0}.f{animation:none;opacity:1}}
+</style>
+<path class="f" fill-rule="evenodd" d="M415 0L0 492L48 533.5L306 533.5L285 781L700 289L652 247.5L394 247.5ZM335 191L310 493.5L81 493.5ZM365 590L390 287.5L619 287.5Z"/><path class="o" d="M415 0L0 492L48 533.5L306 533.5L285 781L700 289L652 247.5L394 247.5ZM335 191L310 493.5L81 493.5ZM365 590L390 287.5L619 287.5Z"/></svg>

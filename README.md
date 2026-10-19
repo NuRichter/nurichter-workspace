@@ -46,9 +46,24 @@ Foto ilustrasi berlisensi Creative Commons dari Flickr (via Openverse); atribusi
 ada di halaman `credits.html` dan `_build/credits.json`. Ganti dengan foto asli NuRichter
 kapan pun: simpan sebagai WebP di `img/` dengan nama yang sama.
 
-## Jalankan lokal
+## Jalankan & uji lokal
 
 ```bash
-python3 -m http.server 8000
+python3 tools/serve.py 8000      # meniru Vercel: cleanUrls, 404, header keamanan/CSP dari vercel.json
 # buka http://localhost:8000
+
+# uji asap + aksesibilitas (butuh: npm i playwright axe-core && npx playwright install chromium)
+node tests/smoke.mjs             # semua halaman × id/en/ar/ja × desktop/ponsel
 ```
+
+## Brand
+
+Logo, favicon, ikon aplikasi, dan gambar OG berasal dari brand kit NuRichter.
+Unduhan publik ada di `/brand` (brand kit ZIP, panduan identitas PDF, logo SVG/PNG)
+dan dirangkum di halaman `brand.html`.
+
+## Keamanan
+
+`vercel.json` dibuat ulang oleh `_build/build.py` dan berisi CSP ketat (hash SHA-256 untuk
+satu skrip inline di `<head>`), HSTS, X-Frame-Options, Permissions-Policy, dan cache.
+Kalau mengubah skrip inline di `HEAD_JS`, jalankan build lagi supaya hash ikut berubah.

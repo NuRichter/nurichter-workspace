@@ -33,9 +33,38 @@ function init() {
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
   const target = new THREE.Vector3(1.2, 0, -1.2);
 
-  let ink, accent, bg;
-  const readTheme = () => { ink = cssColor("--ink"); accent = cssColor("--accent"); bg = cssColor("--bg"); };
+  let ink, accent, accent2, bg;
+  const readTheme = () => {
+    ink = cssColor("--ink"); accent = cssColor("--accent"); accent2 = cssColor("--accent-2"); bg = cssColor("--bg");
+    if (logoMat) { logoMat.color.copy(accent); edgeMat.color.copy(ink); }
+  };
+  let logoMat = null, edgeMat = null;
   readTheme();
+
+  // ---------------------------------------------------------------- logo 3D (episentrum)
+  // path master logo NuRichter, kotak 700 x 781, simetris putar 180°
+  const OUTER = [[415, 0], [0, 492], [48, 533.5], [306, 533.5], [285, 781], [700, 289], [652, 247.5], [394, 247.5]];
+  const HOLES = [[[335, 191], [310, 493.5], [81, 493.5]], [[365, 590], [390, 287.5], [619, 287.5]]];
+  const LOGO_H = 1.9;
+  const S = LOGO_H / 781;
+  const toV = ([x, y]) => new THREE.Vector2((x - 350) * S, (390.5 - y) * S);
+  const shape = new THREE.Shape(OUTER.map(toV));
+  HOLES.forEach((h) => shape.holes.push(new THREE.Path(h.map(toV))));
+  const logoGeo = new THREE.ExtrudeGeometry(shape, { depth: 0.16, bevelEnabled: false });
+  logoGeo.translate(0, 0, -0.08);
+  logoMat = new THREE.MeshLambertMaterial({ color: accent });
+  edgeMat = new THREE.LineBasicMaterial({ color: ink, transparent: true, opacity: 0.35 });
+  const logo = new THREE.Group();
+  const logoMesh = new THREE.Mesh(logoGeo, logoMat);
+  logo.add(logoMesh, new THREE.LineSegments(new THREE.EdgesGeometry(logoGeo, 25), edgeMat));
+  scene.add(logo);
+  scene.add(new THREE.AmbientLight(0xffffff, 2.1));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.6);
+  sun.position.set(-2, 4, 6);
+  scene.add(sun);
+  const LOGO = { x: 3.3, z: -1.0, s: 1 };
+  let pulse = 0;
+  let fromLogo = false;
 
   // satu THREE.Line per baris, posisi & warna diperbarui tiap frame
   const lines = [];
@@ -101,14 +130,27 @@ function init() {
         const x = L.pos[i];
         const y = height(x, L.z);
         L.pos[i + 1] = y;
+        // dua tahap: tinta → biru Richter → ungu Infinity di puncak gelombang
         const k = Math.min(1, Math.abs(y) * 5.5);
-        L.col[i] = base.r + (accent.r - base.r) * k;
-        L.col[i + 1] = base.g + (accent.g - base.g) * k;
-        L.col[i + 2] = base.b + (accent.b - base.b) * k;
+        let r, g, b;
+        if (k < 0.55) {
+          const u = k / 0.55;
+          r = base.r + (accent.r - base.r) * u; g = base.g + (accent.g - base.g) * u; b = base.b + (accent.b - base.b) * u;
+        } else {
+          const u = (k - 0.55) / 0.45;
+          r = accent.r + (accent2.r - accent.r) * u; g = accent.g + (accent2.g - accent.g) * u; b = accent.b + (accent2.b - accent.b) * u;
+        }
+        L.col[i] = r; L.col[i + 1] = g; L.col[i + 2] = b;
       }
       L.geo.attributes.position.needsUpdate = true;
       L.geo.attributes.color.needsUpdate = true;
     }
+    // logo menunggang gelombang, berayun pelan, berdenyut saat memicu gempa
+    pulse *= 0.94;
+    const s = LOGO.s * (1 + pulse * 0.12);
+    logo.position.set(LOGO.x, (LOGO_H / 2) * LOGO.s + 0.18 + height(LOGO.x, LOGO.z) * 1.4 + Math.sin(t * 0.8) * 0.05, LOGO.z);
+    logo.rotation.set(Math.sin(t * 0.5) * 0.06, -0.35 + Math.sin(t * 0.35) * 0.45, Math.sin(t * 0.6) * 0.03);
+    logo.scale.setScalar(s);
   }
 
   function resize() {
@@ -118,6 +160,8 @@ function init() {
     camera.aspect = w / h;
     // di layar sempit, kamera mundur supaya bidang tetap memenuhi hero
     const narrow = w < 700;
+    // ponsel: logo pindah ke belakang tengah (area atas hero, di atas teks)
+    if (narrow) { LOGO.x = 0.75; LOGO.z = -1.2; LOGO.s = 0.55; } else { LOGO.x = 3.3; LOGO.z = -1.0; LOGO.s = 1; }
     camera.position.set(narrow ? 0.4 : 0.6, narrow ? 6.4 : 4.4, narrow ? 6.6 : 6.4);
     camera.lookAt(narrow ? new THREE.Vector3(0, 0, 0.9) : target);
     camera.updateProjectionMatrix();
@@ -141,6 +185,15 @@ function init() {
   });
   hero.addEventListener("pointerleave", () => { pointer.on = false; });
   canvas.addEventListener("pointerdown", (ev) => {
+    // klik tepat di logo: gempa besar dari episentrum
+    const b0 = canvas.getBoundingClientRect();
+    ndc.set(((ev.clientX - b0.left) / b0.width) * 2 - 1, -((ev.clientY - b0.top) / b0.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    if (ray.intersectObject(logoMesh, false).length) {
+      lastUser = t; pulse = 1;
+      addQuake(LOGO.x, LOGO.z, 6 + Math.random() * 1.5);
+      return;
+    }
     const p = toField(ev);
     if (!p) return;
     lastUser = t;
@@ -158,7 +211,7 @@ function init() {
   new ResizeObserver(resize).observe(hero);
 
   if (reduced) {
-    addQuake(2.5, -0.5, 5.2);
+    addQuake(LOGO.x, LOGO.z, 5.2);
     t = 1.4;
     update();
     renderer.render(scene, camera);
@@ -172,7 +225,10 @@ function init() {
     if (!visible || document.hidden) return;
     t += dt;
     if (t > nextAuto && t - lastUser > 5) {
-      addQuake((Math.random() - 0.2) * W * 0.55, (Math.random() - 0.5) * D * 0.6, 3.2 + Math.random() * 2.2);
+      // bergantian: dari logo (episentrum) dan dari titik acak
+      fromLogo = !fromLogo;
+      if (fromLogo) { pulse = 1; addQuake(LOGO.x, LOGO.z, 4.6 + Math.random() * 1.4); }
+      else addQuake((Math.random() - 0.2) * W * 0.55, (Math.random() - 0.5) * D * 0.6, 3.2 + Math.random() * 2.2);
       nextAuto = t + 4.5 + Math.random() * 3;
     }
     update();
